@@ -43,7 +43,7 @@ generate_values:
     {{chart_version}} > values_{{version_safe}}.yaml"
 
 template:
-  @{{_sh}} "helm template {{_helm_args}} {{_helm_common}}"
+  @{{_sh}} "helm template {{_helm_args}} {{_helm_common}} --include-crds"
 
 create_namespace:
   @echo "Namespace may already exist, in which case ignore errors"
