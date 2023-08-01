@@ -1,0 +1,20 @@
+set export
+
+kubeconfig := env_var_or_default("KUBECONFIG", "path_to_a_kubeconfig")
+kube_context := env_var_or_default("KUBE_CONTEXT", "default")
+
+_bash := "#!/usr/bin/env bash\nset -vuxo pipefail"
+
+_sh := "just --no-highlight _exec_sh"
+
+_default:
+  @just --list --unsorted
+
+_exec_sh *ARGS:
+  @{{_bash}}
+  {{ARGS}}
+
+template:
+  @{{_sh}} "cd core && just template"
+  @{{_sh}} "cd istiod && just template"
+  @{{_sh}} "cd gateway && just template"

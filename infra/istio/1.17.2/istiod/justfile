@@ -1,0 +1,59 @@
+set export
+
+kubeconfig := env_var_or_default("KUBECONFIG", "path_to_a_kubeconfig")
+kube_context := env_var_or_default("KUBE_CONTEXT", "default")
+namespace := "istio-system"
+chart_repo := "istio"
+chart_name := "istiod"
+release_name := chart_name
+chart_version := "1.17.2"
+version_safe := replace(chart_version,'.','-')
+
+_helm_common := '--namespace $namespace --kubeconfig $kubeconfig --kube-context $kube_context'
+
+_helm_args := '$release_name $chart_repo/$chart_name \
+  --version $chart_version \
+  --values values_$version_safe.yaml \
+'
+
+_kubectl_common := "--context $kube_context --kubeconfig $kubeconfig"
+
+_bash := "#!/usr/bin/env bash\nset -vuxo pipefail"
+
+_sh := "just --no-highlight _exec_sh"
+
+_k := "kubectl"
+
+_default:
+  @just --list --unsorted
+
+_exec_sh *ARGS:
+  @{{_bash}}
+  {{ARGS}}
+
+search_chart_versions:
+  @{{_sh}} "helm search repo -l {{chart_repo}}/{{chart_name}}"
+
+generate_values:
+  @{{_sh}} "if [[ -f values_{{version_safe}}.yaml ]]; then cp values_{{version_safe}}.yaml values_{{version_safe}}.yaml.$(date '+%Y%m%d_%s'); fi"
+  @{{_sh}} "helm show values {{chart_repo}}/{{chart_name}} --version \
+    {{chart_version}} > values_{{version_safe}}.yaml"
+
+template:
+  @{{_sh}} "helm template {{_helm_args}} {{_helm_common}}"
+
+install:
+  @{{_sh}} "if ! [[ -e values_{{version_safe}}.yaml ]]; then echo '[ERROR] Aborting since values_{{version_safe}}.yaml does not exist. Hint: Use \`just generate_values\` first and customize this file as needed..' && exit 1 ; fi"
+  @{{_sh}} "helm install {{_helm_args}} {{_helm_common}}"
+
+upgrade:
+  @{{_sh}} "helm upgrade {{_helm_args}} {{_helm_common}}"
+
+uninstall:
+  @{{_sh}} "helm uninstall {{release_name}} {{_helm_common}} || true"
+
+list:
+  @{{_sh}} "helm list --filter {{release_name}} --all-namespaces --kubeconfig {{kubeconfig}} \
+    --kube-context {{kube_context}}"
+  @{{_sh}} "kubectl {{_kubectl_common}} get pods -o wide --namespace {{namespace}}"
+
