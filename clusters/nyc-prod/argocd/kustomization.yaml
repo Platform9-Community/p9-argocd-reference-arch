@@ -3,11 +3,12 @@ kind: Kustomization
 resources:
   - ../../../infra/argocd-system/v2.7.9
   - root-application.yaml
-namespace: argocd-prod
-patches:
-  - path: ./argocd-redis-ha-server_patch.json
-    target:
-      group: apps
-      version: v1
-      kind: StatefulSet
-      name: argocd-redis-ha-server
+namespace: argocd
+# example patch
+#patches:
+#  - path: ./argocd-redis-ha-server_patch.json
+#    target:
+#      group: apps
+#      version: v1
+#      kind: StatefulSet
+#      name: argocd-redis-ha-server

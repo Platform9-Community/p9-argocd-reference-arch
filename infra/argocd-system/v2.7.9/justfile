@@ -1,0 +1,4 @@
+version := "v2.7.9"
+
+generate_manifest:
+  curl -s https://raw.githubusercontent.com/argoproj/argo-cd/{{version}}/manifests/install.yaml -O
