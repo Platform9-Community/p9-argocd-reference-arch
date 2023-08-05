@@ -21,7 +21,7 @@ _exec_sh *ARGS:
 re-use src_cluster_name new_cluster_name:
   @{{_sh}} "printf \"\n\n{{cyan}}Copying site manifest {{src_cluster_name}}.yaml to {{new_cluster_name}}.yaml{{no_color}}\n\n\""
   @{{_sh}} "cp -f sites/{{src_cluster_name}}.yaml sites/{{new_cluster_name}}.yaml"
-  @{{_sh}} "perl -p -i -e "s/{{src_cluster_name}}/{{new_cluster_name}}/" sites/{{new_cluster_name}}.yaml"
+  @{{_sh}} "perl -p -i -e "s/{{src_cluster_name}}/{{new_cluster_name}}/g" sites/{{new_cluster_name}}.yaml"
   @{{_sh}} "printf \"\n{{green}}Done{{no_color}}\n\n\""
 
 clone src_cluster_name new_cluster_name:
@@ -29,5 +29,6 @@ clone src_cluster_name new_cluster_name:
   @{{_sh}} "cp -pr clusters/{{src_cluster_name}} clusters/{{new_cluster_name}}"
   @{{_sh}} "printf \"\n\n{{cyan}}Copying site manifest {{src_cluster_name}}.yaml to {{new_cluster_name}}.yaml{{no_color}}\n\n\""
   @{{_sh}} "cp -f sites/{{src_cluster_name}}.yaml sites/{{new_cluster_name}}.yaml"
-  @{{_sh}} "perl -p -i -e "s/{{src_cluster_name}}/{{new_cluster_name}}/" sites/{{new_cluster_name}}.yaml"
+  @{{_sh}} "perl -p -i -e "s/{{src_cluster_name}}/{{new_cluster_name}}/g" sites/{{new_cluster_name}}.yaml"
+  @{{_sh}} "perl -p -i -e "s/{{src_cluster_name}}/{{new_cluster_name}}/g" clusters/{{new_cluster_name}}/README.md"
   @{{_sh}} "printf \"\n{{green}}Done{{no_color}}\n\n\""
