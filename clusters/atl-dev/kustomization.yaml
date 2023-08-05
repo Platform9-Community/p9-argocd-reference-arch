@@ -1,4 +1,4 @@
 resources:
-  - infra
+  - infrastructure
   - argocd
   - apps
