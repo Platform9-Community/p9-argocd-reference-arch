@@ -2,7 +2,7 @@
 
 This repo implements an opinionated architecture implemenation of gitops with ArgoCD.
 
-The defitions for the ArgoCD installation are maintained here as well as all of the kubernetes cluster infrastructure components and applications.
+The definitions for the ArgoCD installation are maintained here as well as all of the kubernetes cluster infrastructure components and applications.
 
 ## Design Goals
 
@@ -12,6 +12,9 @@ The defitions for the ArgoCD installation are maintained here as well as all of 
 1. Repo artifacts can reference external versioned helm charts and manifests, for example micro services from other git repos
 
 ## Usage
+
+This repo is used in conjuction with [site deployer](https://github.com/Platform9-Community/site-deployer/tree/main).
+Any `kind: Site` objects in the `sites/` directory are provisioned via ansible.
 
 ### Use Case 1 (many clusters sharing the same manifests)
 
@@ -36,5 +39,5 @@ With Kustomize you can create manifest overlays that represent those differences
 You could begin with an existing cluster definition as a starting point.
 
 ```
-just clone sdf-prod1 lax-prod1
+just clone atl-dev lax-dev1
 ```
