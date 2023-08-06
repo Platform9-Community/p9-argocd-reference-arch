@@ -1,6 +1,6 @@
-# ArgoCD Reference Architecture
+# ArgoCD Reference Methodology
 
-This repo implements an opinionated implemenation of gitops with ArgoCD.
+This repo implements an opinionated architecture implemenation of gitops with ArgoCD.
 
 The defitions for the ArgoCD installation are maintained here as well as all of the kubernetes cluster infrastructure components and applications.
 
@@ -31,7 +31,7 @@ This will create a new `kind: Site` object in the `sites/` directory for `sdf-qa
 ### Use Case 2 (each cluster can be unique but with minimal manifest duplication)
 
 In another scenario, you may have multiple kubernetes clusters with varying degrees of manifest overlap. There might be a lot of differences, or very few.
-With Kustomize you can create manifest overlays that represent those differences. All of the manifest overlay (unions) need not be duplicated, only what is distinct.
+With Kustomize you can create manifest overlays that represent those differences. All of the manifest unions need not be duplicated, only what is distinct.
 
 You could begin with an existing cluster definition as a starting point.
 

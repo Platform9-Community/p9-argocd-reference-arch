@@ -14,7 +14,7 @@ spec:
   source:
     repoURL: https://github.com/Platform9-Community/p9-argocd-reference-arch.git
     targetRevision: HEAD
-    path: clusters/nyc-prod/argocd
+    path: clusters/osfa/argocd
   syncPolicy:
     automated:
       allowEmpty: true
