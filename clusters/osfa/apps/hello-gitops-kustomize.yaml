@@ -11,6 +11,7 @@ spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
+    namespace: argocd
   source:
     repoURL: https://github.com/Platform9-Community/pf9-gitops-demo.git
     targetRevision: HEAD
