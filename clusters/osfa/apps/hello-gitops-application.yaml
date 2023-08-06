@@ -1,10 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-root
+  name: hello-gitops
+  namespace: argocd
   labels:
     app.kubernetes.io/managed-by: argocd
-    app.kubernetes.io/name: argocd-root
+    app.kubernetes.io/name: hello-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
@@ -12,9 +13,9 @@ spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    repoURL: https://github.com/Platform9-Community/p9-argocd-reference-arch.git
+    repoURL: https://github.com/Platform9-Community/pf9-gitops-demo.git
     targetRevision: HEAD
-    path: clusters/osfa/argocd
+    path: kustomize/dev
   syncPolicy:
     automated:
       allowEmpty: true
