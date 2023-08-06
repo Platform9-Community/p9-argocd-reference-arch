@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-addons
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/Platform9-Community/p9-argocd-reference-arch.git
+      revision: HEAD
+      directories:
+      - path: infrastructure/istio/1.17.2
+      - path: infrastructure/kube-prometheus-stack/38.0.4
+  template:
+    metadata:
+      name: '{{path[1]}}-{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Platform9-Community/p9-argocd-reference-arch.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc

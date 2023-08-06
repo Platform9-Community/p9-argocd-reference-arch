@@ -1,0 +1,11 @@
+apiVersion: deploy.ethzero.cloud/v1
+kind: Site
+metadata:
+  name: atl-dev
+spec:
+  clusterName: atl-dev
+  nodeImage: Ubuntu 20.04
+  numMasters: 1
+  numWorkers: 0
+  runWorkloadOnMasters: true
+  repoPath: clusters/atl-dev
