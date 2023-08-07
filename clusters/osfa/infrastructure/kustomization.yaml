@@ -1,4 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - infra-applicationset.yaml
+  - ../../../infrastructure/istio/1.17.2
+  - ../../../infrastructure/p9-kube-prometheus-stack/38.0.4

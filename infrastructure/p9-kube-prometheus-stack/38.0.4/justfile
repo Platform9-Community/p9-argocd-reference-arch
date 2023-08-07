@@ -1,0 +1,5 @@
+version := "38.0.4"
+
+generate_manifest:
+  helm show crds pf9-plus/kube-prometheus-stack --version {{version}} > crds.yaml
+  helm template --skip-crds pf9-plus/kube-prometheus-stack --version {{version}} > install.yaml

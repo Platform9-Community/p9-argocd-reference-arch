@@ -1,10 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-system
+  name: infra-addons
+  namespace: argocd
   labels:
     app.kubernetes.io/managed-by: argocd
-    app.kubernetes.io/name: argocd-system
+    app.kubernetes.io/name: infra-addons
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
@@ -14,7 +15,7 @@ spec:
   source:
     repoURL: https://github.com/Platform9-Community/p9-argocd-reference-arch.git
     targetRevision: HEAD
-    path: clusters/osfa/argocd
+    path: clusters/osfa/infrastructure
   syncPolicy:
     automated:
       allowEmpty: true
@@ -22,3 +23,10 @@ spec:
       selfHeal: true
     syncOptions:
     - allowEmpty=true
+    - RespectIgnoreDifferences=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 15s
+        maxDuration: 5m0s
+        factor: 2
